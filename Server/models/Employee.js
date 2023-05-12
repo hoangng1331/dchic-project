@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 const { Schema, model } = mongoose;
-const autoIncrement = require("mongoose-auto-increment");
-// const AutoIncrement = require('mongoose-sequence')(mongoose);
-  autoIncrement.initialize(mongoose.connection);
 
 // Mongoose Datatypes:
 // https://mongoosejs.com/docs/schematypes.html
@@ -93,9 +90,4 @@ employeeSchema.set('toObject', { virtuals: true });
 employeeSchema.set('toJSON', { virtuals: true });
 
 const Employee = model("Employee", employeeSchema);
-// const Employee = mongoose.model("Employee", employeeSchema);
-// RESET pId
-// Employee.resetCount(function(err, nextCount) {
-//   console.log('Auto-increment has been reset!'); 
-// });
 module.exports = Employee;

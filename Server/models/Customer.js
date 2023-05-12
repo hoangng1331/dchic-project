@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
-const autoIncrement = require("mongoose-auto-increment");
-// const AutoIncrement = require('mongoose-sequence')(mongoose);
-  autoIncrement.initialize(mongoose.connection);
 
 const customerSchema = new Schema({
   firstName: { type: String, required: true },
@@ -56,7 +53,6 @@ const customerSchema = new Schema({
         return phoneRegex.test(value);
       },
       message: `{VALUE} is not a valid phone!`,
-      // message: (props) => `{props.value} is not a valid email!`,
     },
   },
   password: { type: String, required: true },
@@ -72,26 +68,8 @@ customerSchema.set('toObject', { virtuals: true });
 // Virtuals in JSON
 customerSchema.set('toJSON', { virtuals: true });
 
-// customerSchema.plugin(autoIncrement.plugin, {
-//   model: "Customer",
-//   field: "_id",
-//   startAt: 1,
-//   incrementBy: 1, 
-//   });
 
-//   customerSchema.pre('save', function (next) {
-//     let doc = this;
-//     // Check if the document is new
-//     if (doc.isNew) {
-//       let b =(doc._id).toString().padStart(6, '0');
-//       doc._id = b ;
-//     }
-//     next();
-//   });
 
 const Customer = model('Customer', customerSchema);
-// RESET pId
-// Customer.resetCount(function(err, nextCount) {
-//   console.log('Auto-increment has been reset!'); 
-// });
+
 module.exports = Customer;
