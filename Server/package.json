@@ -16,7 +16,7 @@
     "http-errors": "~1.6.3",
     "jade": "^1.9.2",
     "jsonwebtoken": "^9.0.0",
-    "mongodb": "^5.1.0",
+    "mongodb": "^5.5.0",
     "mongoose": "^6.10.4",
     "mongoose-lean-virtuals": "^0.9.1",
     "mongoose-sequence": "^5.3.1",
