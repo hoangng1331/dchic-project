@@ -53,6 +53,7 @@ function CartSlice() {
   );
   const [maxQuantity, setMaxQuantity] = React.useState<any>(0)
   const [refresh, setRefresh] = React.useState<any>(0)
+
   useEffect(() => {
     let cart = JSON.parse(getFromLocalStorage("cart") as string);
     if (cart as any) {
@@ -83,21 +84,26 @@ function CartSlice() {
     setMaxQuantity(responses.map((res) => res.data.quantity)); //lấy ra thuộc tính quantity của đối tượng trả về
   };
   useEffect(() => {
-    fetchProducts(cart);
-    fetchMaxQuantities(cart)
-    setRefresh(Date.now())
+    const intervalId = setInterval(() => {
+      fetchProducts(cart);
+      fetchMaxQuantities(cart);
+    }, 3000);
+    
+    return () => clearInterval(intervalId);
   }, [cart, refresh]);
+  
   const removeCart = (index: number) => {
-
+    setRefresh((f: any)=> f + 1)
     dispatch(removeCartItem(index));
   };
   const incrQuantity = async (index:number) =>{
+    setRefresh((f: any)=> f + 1)
     const requests = await axios.get(`${API_URL}/products/${cart[index].productId}/variants/${cart[index].colorId}/sizes/${cart[index].sizeId}/order`);
     if (cart[index].quantity+1>requests.data.quantity){
       message.error("Đã thêm toàn bộ số lượng trong kho vào đơn hàng của bạn!")
-
+      setRefresh((f: any)=> f + 1)
     } else {
-
+      setRefresh((f: any)=> f + 1)
       dispatch(increment(index))
     }
   }
@@ -194,7 +200,8 @@ function CartSlice() {
                         }}
                       >
                         <span
-                          onClick={() => {dispatch(decrement(index))}}
+                          onClick={() => {dispatch(decrement(index))
+                            setRefresh((f: any)=> f + 1)}}
                           className="btn_quantity btn_sub no_select"
                           style={{
                             display: "inline-block",
