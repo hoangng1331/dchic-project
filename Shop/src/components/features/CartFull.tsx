@@ -10,6 +10,7 @@ import { API_URL } from "../../constants/URLS";
 function CartFull() {
   const cart = useSelector((state: any) => state.cart);
   const { auth } = useAuthStore((state: any) => state);
+  const [refresh, setRefresh] = React.useState<any>(0)
   let navigate = useNavigate();
     const subtotal = cart.reduce(
         (acc: number, item: any) => acc + item.quantity * item.price,
@@ -20,6 +21,7 @@ function CartFull() {
         0
       );
       const handleClick = async () => {
+        setRefresh((f: any)=> f + 1)
         let more = null;
       
         for (const item of cart) {

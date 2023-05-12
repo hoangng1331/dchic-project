@@ -481,20 +481,21 @@ export default function SearchOrdersByStatus() {
                     <Table.Summary.Row style={{alignContent:"right"}}>
                       <Table.Summary.Cell index={0}></Table.Summary.Cell>
                       <Table.Summary.Cell index={1}></Table.Summary.Cell>
-                      <Table.Summary.Cell index={2}>
+                      <Table.Summary.Cell index={3}></Table.Summary.Cell>
+                      <Table.Summary.Cell index={4}>
                         <strong>Tổng sản phẩm:</strong>
                       </Table.Summary.Cell>
-                      <Table.Summary.Cell index={3}>
+                      <Table.Summary.Cell index={5}>
                         <strong>{totalQuantity}</strong>
                       </Table.Summary.Cell>
-                      <Table.Summary.Cell index={4}></Table.Summary.Cell>
-                      <Table.Summary.Cell index={5}>
+                      <Table.Summary.Cell index={6}></Table.Summary.Cell>
+                      <Table.Summary.Cell index={7}>
                         <strong>Tổng giá trị:</strong>
                       </Table.Summary.Cell>
-                      <Table.Summary.Cell index={6}>
+                      <Table.Summary.Cell index={8}>
                         <strong>{numeral(totalValue).format("0,0$")}</strong>
                       </Table.Summary.Cell>
-                      <Table.Summary.Cell index={7}></Table.Summary.Cell>
+                      <Table.Summary.Cell index={9}></Table.Summary.Cell>
                     </Table.Summary.Row>
                   </Table.Summary>
                 );

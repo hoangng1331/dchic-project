@@ -15,6 +15,7 @@ function Register() {
   const [birthDay, setBirthDay] = useState<string>();
   const [phoneNumber, setPhoneNumber] = useState<string>();
   const [gender, setGender] = useState<string>();
+  const [newPass, setNewPass] = useState<string>();
   const navigate = useNavigate();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (event.target.name) {
@@ -42,6 +43,9 @@ function Register() {
       case "gender":
         setGender(event.target.value);
         break;
+        case "newPass":
+          setNewPass(event.target.value);
+          break;
 
       default:
         break;
@@ -60,14 +64,17 @@ function Register() {
       birthday: birthDay,
       phoneNumber: phoneNumber,
     };
-    axios.post(API_URL+"/customers", data)
-    .then((res) => {
-      message.success("Tạo tài khoản thành công");
-      navigate("/login")
-    })
-    .catch((error) => {
-      message.error("Vui lòng kiểm tra lại thông tin");
-    });
+    if (passWord===newPass){
+      axios.post(API_URL+"/customers", data)
+      .then((res) => {
+        message.success("Tạo tài khoản thành công");
+        navigate("/login")
+      })
+      .catch((error) => {
+        message.error("Vui lòng kiểm tra lại thông tin");
+      });
+    } else {message.error("Mật khẩu xác nhận không đúng")}
+   
   };
   return (
     <div>
@@ -82,8 +89,8 @@ function Register() {
                 type="text"
                 className="form-control"
                 onChange={handleChange}
-                value={firstName ? firstName : ""}
-                name="firstname"
+                value={lastName ? lastName : ""}
+                name="lastName"
                 required
               />
             </div>
@@ -93,8 +100,8 @@ function Register() {
                 type="text"
                 className="form-control"
                 onChange={handleChange}
-                value={lastName ? lastName : ""}
-                name="lastname"
+                value={firstName ? firstName : ""}
+                name="firstName"
                 required
               />
             </div>
@@ -180,7 +187,11 @@ function Register() {
           <div className="row">
             <div className="col-md-6 mt-md-0 mt-3">
               <label>Nhập lại mật khẩu</label>
-              <input type="password" className="form-control" required />
+              <input
+              onChange={handleChange}
+              value={newPass ? newPass : ""}
+              name="newPass"
+               type="password" className="form-control" required />
             </div>
           </div>
           <div style={{textAlign:"center"}}>

@@ -52,6 +52,7 @@ function CartSlice() {
     {}
   );
   const [maxQuantity, setMaxQuantity] = React.useState<any>(0)
+  const [refresh, setRefresh] = React.useState<any>(0)
 
   useEffect(() => {
     let cart = JSON.parse(getFromLocalStorage("cart") as string);
@@ -82,19 +83,22 @@ function CartSlice() {
     const responses = await Promise.all(requests);
     setMaxQuantity(responses.map((res) => res.data.quantity)); //lấy ra thuộc tính quantity của đối tượng trả về
   };
-  console.log({maxQuantity})
   useEffect(() => {
     fetchProducts(cart);
     fetchMaxQuantities(cart)
-  }, [cart]);
+  }, [cart, refresh]);
   const removeCart = (index: number) => {
+    setRefresh((f: any)=> f + 1)
     dispatch(removeCartItem(index));
   };
   const incrQuantity = async (index:number) =>{
+    setRefresh((f: any)=> f + 1)
     const requests = await axios.get(`${API_URL}/products/${cart[index].productId}/variants/${cart[index].colorId}/sizes/${cart[index].sizeId}/order`);
     if (cart[index].quantity+1>requests.data.quantity){
       message.error("Đã thêm toàn bộ số lượng trong kho vào đơn hàng của bạn!")
+      setRefresh((f: any)=> f + 1)
     } else {
+      setRefresh((f: any)=> f + 1)
       dispatch(increment(index))
     }
   }
@@ -191,7 +195,8 @@ function CartSlice() {
                         }}
                       >
                         <span
-                          onClick={() => dispatch(decrement(index))}
+                          onClick={() => {dispatch(decrement(index))
+                            setRefresh((f: any)=> f + 1)}}
                           className="btn_quantity btn_sub no_select"
                           style={{
                             display: "inline-block",
@@ -261,7 +266,7 @@ function CartSlice() {
                         </b>
                       </span>
                     </div>
-                    {maxQuantity.quantity<data.quantity && (
+                    {maxQuantity[index]<data.quantity && (
                       <div className="small" style={{ position: "relative", transform: "translateY(100%)" }}>
                         <h5 className="small" style={{color: "red"}}>Số lượng còn lại không đủ, kho chỉ còn {maxQuantity.quantity} sản phẩm!</h5>
                       </div>

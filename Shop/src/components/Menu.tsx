@@ -222,11 +222,11 @@ function Menu() {
                   <Route path="/orderproduct" element={<OrderProduct />} />
                   <Route
                     path="/login"
-                    element={<Navigate to="/products" replace />}
+                    element={<Navigate to="/customer/information" replace />}
                   />
                   <Route
                     path="/register"
-                    element={<Navigate to="/products" replace />}
+                    element={<Navigate to="/customer/information" replace />}
                   />
 
                   <Route
