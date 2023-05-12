@@ -338,7 +338,7 @@ const OrderForm = () => {
         message.error("Chưa có sản phẩm nào trong đơn hàng");
       } else {
         axios
-          .post("http://localhost:5000/orders", {
+          .post("https://dchic-project-backend-server-p4uw.onrender.com/orders", {
             receiverName: values.receiverName,
             phoneNumber: values.phoneNumber,
             email: values.email,

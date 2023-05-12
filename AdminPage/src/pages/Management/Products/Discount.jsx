@@ -110,7 +110,7 @@ export default function Discount() {
     let { discount } = values;
 
     // CALL API TO CREATE CUSTOMER
-    axios.get('http://localhost:5000/products/questions/1?discount=' + discount, values).then((response) => {
+    axios.get('https://dchic-project-backend-server-p4uw.onrender.com/products/questions/1?discount=' + discount, values).then((response) => {
       console.log(response.data);
       setProducts(response.data);
     });
