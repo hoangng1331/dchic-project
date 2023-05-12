@@ -1,4 +1,8 @@
+
+const url = 'mongodb+srv://ngochoang8709:75AoRN5lyXXKkjxG@project1.mjbc8dr.mongodb.net/?retryWrites=true&w=majority'
 module.exports = {
-  CONNECTION_STRING: 'mongodb+srv://my-mongodb:Nnh1206@my-db.tsai8ze.mongodb.net/?retryWrites=true&w=majority',
-  DATABASE_NAME: 'Object',
+  CONNECTION_STRING: url,
+  DATABASE_NAME: 'project1',
 };
+ 
+
