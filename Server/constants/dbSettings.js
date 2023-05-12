@@ -1,4 +1,4 @@
 module.exports = {
-  CONNECTION_STRING: 'mongodb://127.0.0.1:27017/Object',
+  CONNECTION_STRING: 'mongodb+srv://ngochoang8709:<nnhntbn1331>@my-db.tsai8ze.mongodb.net/?retryWrites=true&w=majority',
   DATABASE_NAME: 'Object',
 };
