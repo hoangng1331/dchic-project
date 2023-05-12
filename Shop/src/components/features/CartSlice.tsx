@@ -53,7 +53,6 @@ function CartSlice() {
   );
   const [maxQuantity, setMaxQuantity] = React.useState<any>(0)
   const [refresh, setRefresh] = React.useState<any>(0)
-    setRefresh(Date.now())
   useEffect(() => {
     let cart = JSON.parse(getFromLocalStorage("cart") as string);
     if (cart as any) {
@@ -86,6 +85,7 @@ function CartSlice() {
   useEffect(() => {
     fetchProducts(cart);
     fetchMaxQuantities(cart)
+    setRefresh(Date.now())
   }, [cart, refresh]);
   const removeCart = (index: number) => {
 
