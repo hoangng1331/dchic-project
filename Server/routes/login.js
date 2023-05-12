@@ -13,8 +13,9 @@ var router = express.Router();
 /* GET ALL */
 router.get("/", function (req, res, next) {
   try {
-    Login.find().then((result) => {
-        console.log(result)
+    Login.find()
+      .populate({ path: 'name', select: 'firstName lastName fullName phoneNumber' })
+      .then((result) => {
         res.send(result);
       })
       .catch((err) => {
@@ -30,6 +31,7 @@ router.get("/:id", function (req, res, next) {
   try {
     const { id } = req.params;
     Login.findById(id)
+    .populate({ path: 'name', select: 'firstName lastName fullName phoneNumber' })
       .then((result) => {
         res.send(result);
       })
