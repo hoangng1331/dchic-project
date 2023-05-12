@@ -89,6 +89,7 @@ const router = express.Router();
 /* GET ALL */
 router.get('/', function (req, res, next) {
   try {
+    
     Category.find()
       .then((result) => {
         res.send(result);
