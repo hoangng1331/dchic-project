@@ -268,7 +268,7 @@ function CartSlice() {
                     </div>
                     {maxQuantity[index]<data.quantity && (
                       <div className="small" style={{ position: "relative", transform: "translateY(100%)" }}>
-                        <h5 className="small" style={{color: "red"}}>Số lượng còn lại không đủ, kho chỉ còn {maxQuantity.quantity} sản phẩm!</h5>
+                        <h5 className="small" style={{color: "red"}}>Số lượng còn lại không đủ, kho chỉ còn {maxQuantity[index]} sản phẩm!</h5>
                       </div>
                     )                      
                     }
