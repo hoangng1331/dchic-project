@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../constants/URLS";
 
 function Register() {
   const dateRef = useRef<HTMLInputElement>(null);
@@ -59,7 +60,7 @@ function Register() {
       birthday: birthDay,
       phoneNumber: phoneNumber,
     };
-    axios.post("http://localhost:5000/customers", data)
+    axios.post(API_URL+"/customers", data)
     .then((res) => {
       message.success("Tạo tài khoản thành công");
       navigate("/login")

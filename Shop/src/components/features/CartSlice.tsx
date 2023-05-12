@@ -10,6 +10,7 @@ import {
 import numeral from "numeral";
 import axios from "axios";
 import { message } from "antd";
+import { API_URL } from "../../constants/URLS";
 
 const getFromLocalStorage = (key: string) => {
   if (!key || typeof window === "undefined") {
@@ -62,7 +63,7 @@ function CartSlice() {
   const fetchProducts = async (cart: any) => {
     const productIds = cart.map((item: any) => item.productId);
     try {
-      const res = await axios.get<Product[]>("http://localhost:5000/products", {
+      const res = await axios.get<Product[]>(API_URL+"/products", {
         params: {
           _id: productIds.join(","),
         },
@@ -77,10 +78,11 @@ function CartSlice() {
     }
   };
   const fetchMaxQuantities = async (cart:any) => {
-    const requests = cart.map((data:any) => axios.get(`http://localhost:5000/products/${data.productId}/variants/${data.colorId}/sizes/${data.sizeId}/order`));
+    const requests = cart.map((data:any) => axios.get(`${API_URL}/products/${data.productId}/variants/${data.colorId}/sizes/${data.sizeId}/order`));
     const responses = await Promise.all(requests);
-    const maxQuantities = responses.map((res) => res.data.quantity); //lấy ra thuộc tính quantity của đối tượng trả về
+    setMaxQuantity(responses.map((res) => res.data.quantity)); //lấy ra thuộc tính quantity của đối tượng trả về
   };
+  console.log({maxQuantity})
   useEffect(() => {
     fetchProducts(cart);
     fetchMaxQuantities(cart)
@@ -89,7 +91,7 @@ function CartSlice() {
     dispatch(removeCartItem(index));
   };
   const incrQuantity = async (index:number) =>{
-    const requests = await axios.get(`http://localhost:5000/products/${cart[index].productId}/variants/${cart[index].colorId}/sizes/${cart[index].sizeId}/order`);
+    const requests = await axios.get(`${API_URL}/products/${cart[index].productId}/variants/${cart[index].colorId}/sizes/${cart[index].sizeId}/order`);
     if (cart[index].quantity+1>requests.data.quantity){
       message.error("Đã thêm toàn bộ số lượng trong kho vào đơn hàng của bạn!")
     } else {
@@ -124,7 +126,7 @@ function CartSlice() {
                   <div className=" col-md-3 col-3 img_wp">
                     <a href={`/products/${data.productId}`}>
                       <img
-                        src={`http://localhost:5000/${data.imageUrl}`}
+                        src={`${API_URL}/${data.imageUrl}`}
                         alt=""
                         style={{    
                         width: "80%",

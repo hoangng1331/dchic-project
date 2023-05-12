@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { getCart } from "../redux/cartSlice";
 import numeral from "numeral";
-import { Form, message } from "antd";
+import { message } from "antd";
 import { useAuthStore } from "../hooks/useAuthStore";
 import {Button} from "antd"
-import { Formik } from "formik";
+import { API_URL } from "../constants/URLS";
 const getFromLocalStorage = (key: string) => {
   if (!key || typeof window === "undefined") {
     return "";
@@ -47,7 +47,6 @@ interface Customer {
   email: string
 }
 function OrderProduct() {
-  const dateRef = useRef<HTMLInputElement>(null);
   const { auth } = useAuthStore((state: any) => state);
   const dispatch = useDispatch();
   const cart = useSelector((state: any) => state.cart);
@@ -64,7 +63,7 @@ function OrderProduct() {
     }
   );
   useEffect(()=>{
-    axios.get(`http://localhost:5000/customers/${auth.loggedInUser._id}`).then((res)=>{
+    axios.get(`${API_URL}/customers/${auth.loggedInUser._id}`).then((res)=>{
       setCustomer(res.data)
     })
   },[auth])
@@ -78,7 +77,7 @@ function OrderProduct() {
   const fetchProducts = async (cart: any) => {
     const productIds = cart.map((item: any) => item.productId);
     try {
-      const res = await axios.get<Product[]>("http://localhost:5000/products", {
+      const res = await axios.get<Product[]>(API_URL+"/products", {
         params: {
           _id: productIds.join(","),
         },
@@ -129,7 +128,7 @@ function OrderProduct() {
     let more = null;
       
         for (const item of cart) {
-          const maxQuantity = await axios.get(`http://localhost:5000/products/${item.productId}/variants/${item.colorId}/sizes/${item.sizeId}/order`);
+          const maxQuantity = await axios.get(`${API_URL}/products/${item.productId}/variants/${item.colorId}/sizes/${item.sizeId}/order`);
           if (maxQuantity.data.quantity < item.quantity) {
             more = item;
             break;
@@ -139,13 +138,13 @@ function OrderProduct() {
         if (more) {
           message.error("Số lượng trong giỏ hàng vượt quá số lượng trong kho hàng. Vui lòng chọn lại!");
         } else {
-          axios.post("http://localhost:5000/orders", data).then((res)=>{
+          axios.post(API_URL+"/orders", data).then((res)=>{
             cart.forEach(async (orderItem: any) => {
               const remainQuantity = await axios.get(
-                `http://localhost:5000/products/${orderItem.productId}/variants/${orderItem.colorId}/sizes/${orderItem.sizeId}/order`
+                `${API_URL}/products/${orderItem.productId}/variants/${orderItem.colorId}/sizes/${orderItem.sizeId}/order`
               );
               axios.patch(
-                `http://localhost:5000/products/${orderItem.productId}/variants/${orderItem.colorId}/sizes/${orderItem.sizeId}/order`,
+                `${API_URL}/products/${orderItem.productId}/variants/${orderItem.colorId}/sizes/${orderItem.sizeId}/order`,
                 {
                   quantity: remainQuantity.data.quantity - orderItem.quantity,
                 }
@@ -332,7 +331,7 @@ function OrderProduct() {
                                       <div className="d-flex flex-row align-items-center">
                                         <div>
                                           <img
-                                            src={`http://localhost:5000/${data.imageUrl}`}
+                                            src={`${API_URL}/${data.imageUrl}`}
                                             className="img-fluid rounded-3"
                                             alt=""
                                             style={{ width: "65px" }}

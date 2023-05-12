@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { message } from "antd";
 import axios from "axios";
 import { useAuthStore } from "../hooks/useAuthStore";
+import { API_URL } from "../constants/URLS";
 function ChangePass() {
   const { auth, login } = useAuthStore((state: any) => state);
   const [passWord, setpassWord] = useState<string>();
@@ -28,7 +29,7 @@ function ChangePass() {
     };
     if (passWord===newPassword){
         axios
-      .patch("http://localhost:5000/customers/"+auth.loggedInUser._id, data)
+      .patch(API_URL+"/customers/"+auth.loggedInUser._id, data)
       .then((res) => {
         const { username, password } = res.data;
         message.success("Thay đổi thông tin thành công");

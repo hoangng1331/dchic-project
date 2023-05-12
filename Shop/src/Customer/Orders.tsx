@@ -18,6 +18,7 @@ import { EyeOutlined } from "@ant-design/icons";
 import { useAuthStore } from "../hooks/useAuthStore";
 import axios from "axios";
 import type { ColumnsType } from 'antd/es/table';
+import { API_URL } from "../constants/URLS";
 const { Option } = Select;
 interface Product {
     _id: string;
@@ -132,7 +133,7 @@ export default function SearchOrdersByStatus() {
         return (
             <Image
             width={60}
-            src={`http://localhost:5000/${text}`}
+            src={`${API_URL}/${text}`}
             />
         )
       },
@@ -266,7 +267,7 @@ export default function SearchOrdersByStatus() {
       align: "center",
       key: "employeeLoginId",
       render: (text: any, record: any) => {
-        axios.get("http://localhost:5000/employees/" + record?.employeeLogin?.employeeId)
+        axios.get(API_URL+"/employees/" + record?.employeeLogin?.employeeId)
           .then((response) => {
             setEmployeeName(response.data.fullName);
           });
@@ -301,7 +302,7 @@ export default function SearchOrdersByStatus() {
               setSelectedOrderView(record);
               setIsViewOrder(true)
               axios
-                .get("http://localhost:5000/employees/" + record?.verifier?.employeeId)
+                .get(API_URL+"/employees/" + record?.verifier?.employeeId)
                 .then((response) => {
                   setVerifierName(response.data.fullName);
                 });
@@ -319,18 +320,18 @@ export default function SearchOrdersByStatus() {
   const [employeeName, setEmployeeName] = React.useState();
   React.useEffect(() => {
     axios
-      .get(`http://localhost:5000/orders/${selectedOrderView?._id}/orderDetails`)
+      .get(`${API_URL}/orders/${selectedOrderView?._id}/orderDetails`)
       .then((response) => {
         setOrderDetail(response.data);
       });
-    axios.get("http://localhost:5000/products").then((response) => {
+    axios.get(API_URL+"/products").then((response) => {
       setProducts(response.data);
     });
   }, [selectedOrderView]);
 
   React.useEffect(() => {
     axios
-    .post("http://localhost:5000/orders/status&customerId", {customerId: auth.loggedInUser._id, status: ""},).then((res)=>{
+    .post(API_URL+"/orders/status&customerId", {customerId: auth.loggedInUser._id, status: ""},).then((res)=>{
         setOrders(res.data);  
     })
   }, [auth]);
@@ -339,7 +340,7 @@ export default function SearchOrdersByStatus() {
     console.log(values)
     setLoading(true);
     axios
-      .post("http://localhost:5000/orders/status&customerId", {status: values.status, customerId: auth.loggedInUser._id})
+      .post(API_URL+"/orders/status&customerId", {status: values.status, customerId: auth.loggedInUser._id})
       .then((response) => {
         // console.log(response.data);
         setOrders(response.data);

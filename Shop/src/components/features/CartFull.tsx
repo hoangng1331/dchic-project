@@ -6,6 +6,7 @@ import axios from "axios";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../hooks/useAuthStore";
+import { API_URL } from "../../constants/URLS";
 function CartFull() {
   const cart = useSelector((state: any) => state.cart);
   const { auth } = useAuthStore((state: any) => state);
@@ -22,7 +23,7 @@ function CartFull() {
         let more = null;
       
         for (const item of cart) {
-          const maxQuantity = await axios.get(`http://localhost:5000/products/${item.productId}/variants/${item.colorId}/sizes/${item.sizeId}/order`);
+          const maxQuantity = await axios.get(`${API_URL}/products/${item.productId}/variants/${item.colorId}/sizes/${item.sizeId}/order`);
           if (maxQuantity.data.quantity < item.quantity) {
             more = item;
             break;

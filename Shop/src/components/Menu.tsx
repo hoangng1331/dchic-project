@@ -6,15 +6,6 @@ import Login from "./Login";
 import About from "./About";
 import Register from "./Register";
 import System from "./System";
-import All from "./Products/All";
-import Ao from "./Products/Ao";
-import Knitwear from "./Products/Knitwear";
-import Vest from "./Products/Vest";
-import Vay from "./Products/Vay";
-import Quan from "./Products/Quan";
-import Quansooc from "./Products/Quansooc";
-import Chanvay from "./Products/Chanvay";
-import Categories from "./Categories";
 import { CartProvider } from "./contexts/Cart";
 import DetailProduct from "./DetailProduct";
 import dchic from "../image/dchic.png";
@@ -39,7 +30,7 @@ const getFromLocalStorage = (key: string) => {
   }
   return localStorage.getItem(key);
 };
-const { Header, Footer, Sider, Content } = Layout;
+const { Sider, Content } = Layout;
 function Menu() {
   const {
     token: { colorBgContainer },
@@ -253,20 +244,12 @@ function Menu() {
               <Route path="/home" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:itemId" element={<DetailProduct />} />
-              <Route path="/categories" element={<Categories />} />
 
               <Route path="/about" element={<About />} />
               <Route path="/system" element={<System />} />
-              <Route path="/all" element={<All />} />
-              <Route path="/ao" element={<Ao />} />
-              <Route path="/knitwear" element={<Knitwear />} />
-              <Route path="/vest" element={<Vest />} />
               <Route path="/cartSlice" element={<CartSlice />} />
               <Route path="/cartFull" element={<CartFull />} />
-              <Route path="/vay" element={<Vay />} />
-              <Route path="/quan" element={<Quan />} />
-              <Route path="/quansooc" element={<Quansooc />} />
-              <Route path="/chanvay" element={<Chanvay />} />
+
 
               <Route
                 path="*"

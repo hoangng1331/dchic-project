@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Routes, Route, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Form, Radio, InputNumber, Button, Image, message } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import { RootState } from "../redux/store";
 import { useDispatch, useSelector } from "react-redux";
-import { increment } from "../redux/features/counter/counterSlice";
 import { addToCart } from "../redux/cartSlice";
 import numeral from "numeral";
 import { AiOutlineCheck } from "react-icons/ai";
 import Carousel from "react-bootstrap/Carousel";
+import { API_URL } from "../constants/URLS";
 
 interface Variant {
   colorId: any;
@@ -67,7 +66,7 @@ function DetailProduct(): JSX.Element {
 
   useEffect(() => {
     axios
-      .get<Details>("http://localhost:5000/products/" + itemId)
+      .get<Details>(API_URL+"/products/" + itemId)
       .then((response: any) => {
         setDetail(response.data);
         setVariants(response.data.variants);
@@ -112,7 +111,7 @@ function DetailProduct(): JSX.Element {
     if (exist) {
       const total = exist.quantity + data.quantity;
       const requests = await axios.get(
-        `http://localhost:5000/products/${exist.productId}/variants/${exist.colorId}/sizes/${exist.sizeId}/order`
+        `${API_URL}/products/${exist.productId}/variants/${exist.colorId}/sizes/${exist.sizeId}/order`
       );
       if (total > requests.data.quantity) {
         message.error(
@@ -151,7 +150,7 @@ function DetailProduct(): JSX.Element {
                     preview={{
                       visible: false,
                     }}
-                    src={`http://localhost:5000/${image}`}
+                    src={`${API_URL}/${image}`}
                   />
                 </Carousel.Item>
               ))}
@@ -165,7 +164,7 @@ function DetailProduct(): JSX.Element {
                   }}
                 >
                   {(variants[index2 ?? 0]?.imageUrl || []).map((img: any) => (
-                    <Image key={img} src={`http://localhost:5000/${img}`} />
+                    <Image key={img} src={`${API_URL}/${img}`} />
                   ))}
                 </Image.PreviewGroup>
               </div>

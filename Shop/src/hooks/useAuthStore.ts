@@ -3,6 +3,7 @@ import { devtools } from 'zustand/middleware';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import axios from 'axios';
 import { message } from 'antd';
+import { API_URL } from '../constants/URLS';
 
 
 export const useAuthStore = create(
@@ -14,7 +15,7 @@ export const useAuthStore = create(
           // AXIOS: Call 1 api login => user
 
           axios
-            .post('http://localhost:5000/customerLogin/login-jwt', {
+            .post(API_URL+'/customerLogin/login-jwt', {
               username,
               password,
             })

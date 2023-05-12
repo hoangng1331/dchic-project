@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuthStore } from "../hooks/useAuthStore";
 import moment from "moment";
+import { API_URL } from "../constants/URLS";
 function Information() {
   const dateRef = useRef<HTMLInputElement>(null);
   const { auth, login } = useAuthStore((state: any) => state);
@@ -61,7 +62,7 @@ function Information() {
       phoneNumber: phoneNumber,
     };
     axios
-      .patch("http://localhost:5000/customers/"+auth.loggedInUser._id, data)
+      .patch(API_URL+"/customers/"+auth.loggedInUser._id, data)
       .then((res) => {
         const { username, password } = res.data;
         message.success("Thay đổi thông tin thành công");

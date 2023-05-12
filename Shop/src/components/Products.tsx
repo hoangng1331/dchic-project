@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import {
-  Button,
   Card,
   Col,
   Form,
@@ -9,20 +7,16 @@ import {
   Menu,
   Radio,
   Row,
-  Select,
-  Space,
   message,
 } from "antd";
 import { AiOutlineCheck } from "react-icons/ai";
-import { CartContext } from "./contexts/Cart";
 import { useNavigate } from "react-router-dom";
 import { BsCartPlus } from "react-icons/bs";
 import axios from "axios";
 import numeral from "numeral";
 import { useDispatch, useSelector } from "react-redux";
-import { increment } from "../redux/features/counter/counterSlice";
 import { addToCart } from "../redux/cartSlice";
-const { Option } = Select;
+import { API_URL } from "../constants/URLS";
 interface Variant {
   colorId: any;
   price: number;
@@ -74,18 +68,18 @@ function Products(): JSX.Element {
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:5000/products/").then((response) => {
+    axios.get(API_URL+"/products/").then((response) => {
       setProducts(response.data);
     });
   }, []);
 
   useEffect(() => {
     axios
-      .post("http://localhost:5000/products/category", { categoryId: category })
+      .post(API_URL+"/products/category", { categoryId: category })
       .then((response) => {
         setProducts(response.data);
       });
-    axios.get("http://localhost:5000/categories/").then((response) => {
+    axios.get(API_URL+"/categories/").then((response) => {
       setCategoryId(response.data);
     });
   }, [category]);
@@ -130,7 +124,7 @@ function Products(): JSX.Element {
     if (exist) {
       const total = exist.quantity + data.quantity;
       const requests = await axios.get(
-        `http://localhost:5000/products/${exist.productId}/variants/${exist.colorId}/sizes/${exist.sizeId}/order`
+        `${API_URL}/products/${exist.productId}/variants/${exist.colorId}/sizes/${exist.sizeId}/order`
       );
       if (total > requests.data.quantity) {
         message.error(
@@ -149,15 +143,8 @@ function Products(): JSX.Element {
   const handleDetail = (itemId: any) => {
     navigate("/products/" + itemId);
   };
-  const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleMenuOpen = () => {
-    setMenuOpen(true);
-  };
 
-  const handleMenuClose = () => {
-    setMenuOpen(false);
-  };
   return (
     <div>
       <Row
@@ -226,7 +213,7 @@ function Products(): JSX.Element {
                           onClick={() => handleDetail(p._id)}
                           alt={p.name}
                           src={
-                            "http://localhost:5000" +
+                            API_URL +
                             p.variants[index2 ?? 0].imageUrl[0]
                           }
                           style={{
