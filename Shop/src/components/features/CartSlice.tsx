@@ -87,7 +87,7 @@ function CartSlice() {
     fetchProducts(cart);
     const intervalId = setInterval(() => {
       fetchMaxQuantities(cart);
-    }, 3000);
+    }, 1000);
     
     return () => clearInterval(intervalId);
   }, [cart, refresh]);
