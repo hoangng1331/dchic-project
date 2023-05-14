@@ -60,7 +60,7 @@ const customerSchema = new Schema({
 
 // Virtuals
 customerSchema.virtual('fullName').get(function () {
-  return this.firstName + ' ' + this.lastName;
+  return this.lastName + ' ' + this.firstName;
 });
 
 // Virtuals in console.log()

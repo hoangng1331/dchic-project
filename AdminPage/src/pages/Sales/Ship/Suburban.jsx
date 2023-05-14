@@ -501,7 +501,7 @@ export default function SuburbanOrders() {
   ];
   React.useEffect(() => {
     axiosClient
-      .post("/orders/status", { shippingFee: "40000", status: status })
+      .post("/orders/status&/status&suburban", { shippingFee: 40000, status: status })
       .then((response) => {
         setOrders(response.data);
       });
@@ -580,7 +580,7 @@ export default function SuburbanOrders() {
               </Descriptions.Item>
               {selectedOrderView.shippingFee === 0 ? (
                 <Descriptions.Item label="Nhân viên giao hàng">
-                  {selectedOrderView.shipper.fullName}
+                  {selectedOrderView.shipper?.fullName}
                 </Descriptions.Item>
               ) : (
                 <Descriptions.Item label="Phí vận chuyển">
@@ -598,7 +598,7 @@ export default function SuburbanOrders() {
                 <></>
               )}
               <Descriptions.Item label="Người xác nhận đơn">
-                {selectedOrderView.verifier.fullName ?? verifierName}
+                {selectedOrderView.verifier?.fullName ?? verifierName}
               </Descriptions.Item>
             </Descriptions>
             <Divider />

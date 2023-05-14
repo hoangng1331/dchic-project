@@ -282,6 +282,38 @@ router.post('/status&shipperId', function(req, res, next) {
     res.sendStatus(500);
   }
 });
+
+router.post('/status&suburban', function(req, res, next) {
+  try {
+    const { status, shippingFee } = req.body;
+
+    const query = {};
+     if (shippingFee) {
+      query.shippingFee = shippingFee;
+    }
+    if (status) {
+      query.status = status;
+    }
+    Order.find(query)
+      .populate('customer')
+      .populate('shipper')
+      .populate('verifier')
+      .populate('employeeLogin')
+      .populate('orderDetails.product')
+      .populate('orderDetails.size')
+      .populate('orderDetails.color')
+      .populate('receiveMoneyConfirmer')
+      .then((result) => {
+        res.send(result); // trả về các đơn hàng kết quả
+      })
+      .catch((err) => {
+        res.status(400).send({ message: err.message });
+      });
+  } catch (err) {
+    res.sendStatus(500);
+  }
+});
+
 router.post('/status&customerId', function(req, res, next) {
   try {
     const { customerId, status } = req.body;
