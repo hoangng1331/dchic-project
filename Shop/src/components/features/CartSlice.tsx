@@ -84,10 +84,10 @@ function CartSlice() {
     setMaxQuantity(responses.map((res) => res.data.quantity)); //lấy ra thuộc tính quantity của đối tượng trả về
   };
   useEffect(() => {
+    fetchProducts(cart);
     const intervalId = setInterval(() => {
-      fetchProducts(cart);
       fetchMaxQuantities(cart);
-    }, 10000);
+    }, 3000);
     
     return () => clearInterval(intervalId);
   }, [cart, refresh]);
