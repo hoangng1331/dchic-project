@@ -230,6 +230,8 @@ function Products(): JSX.Element {
                           }}
                           onMouseLeave={(e: any) => {
                             e.currentTarget.style.opacity = 0;
+                            setSelectedColor(null)
+                            setIndex2(null);
                           }}
                         >
                           <div style={{ textAlign: "center" }}>
