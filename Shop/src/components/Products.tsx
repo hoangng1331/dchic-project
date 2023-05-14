@@ -214,7 +214,7 @@ function Products(): JSX.Element {
                           alt={p.name}
                           src={
                             API_URL +
-                            p.variants[index2 ?? 0].imageUrl[0]
+                            p.variants[index2 ?? 0]?.imageUrl[0]
                           }
                           style={{
                             objectFit: "cover",
@@ -230,7 +230,6 @@ function Products(): JSX.Element {
                           }}
                           onMouseLeave={(e: any) => {
                             e.currentTarget.style.opacity = 0;
-                            setIndex2(null);
                           }}
                         >
                           <div style={{ textAlign: "center" }}>

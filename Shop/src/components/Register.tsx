@@ -25,10 +25,10 @@ function Register() {
       case "password":
         setpassWord(event.target.value);
         break;
-      case "firstname":
+      case "firstName":
         setFirstName(event.target.value);
         break;
-      case "lastname":
+      case "lastName":
         setLastName(event.target.value);
         break;
       case "email":
