@@ -463,7 +463,7 @@ export default function SearchOrdersByStatus() {
               </Descriptions.Item>
               {selectedOrderView.shippingFee === 0 ? (
                 <Descriptions.Item label="Nhân viên giao hàng">
-                  {selectedOrderView.shipper.fullName}
+                  {selectedOrderView.shipper?.fullName}
                 </Descriptions.Item>
               ) : (
                 <Descriptions.Item label="Phí vận chuyển">
@@ -481,7 +481,7 @@ export default function SearchOrdersByStatus() {
                 <></>
               )}
               <Descriptions.Item label="Người xác nhận đơn">
-                {selectedOrderView.verifier.fullName ?? verifierName}
+                {selectedOrderView.verifier?.fullName ?? verifierName}
               </Descriptions.Item>
             </Descriptions>
             <Divider />

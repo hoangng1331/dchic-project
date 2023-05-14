@@ -6,7 +6,7 @@ import { useAuthStore } from "../hooks/useAuthStore";
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 function Login() {
-  const { login } = useAuthStore((state: any) => state);
+  const { login, auth } = useAuthStore((state: any) => state);
   const onSubmit = (values: any) => {
     const { username, password } = values;
     console.log({ username, password });

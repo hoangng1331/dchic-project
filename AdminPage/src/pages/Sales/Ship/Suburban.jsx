@@ -501,7 +501,7 @@ export default function SuburbanOrders() {
   ];
   React.useEffect(() => {
     axiosClient
-      .post("/orders/status&/status&suburban", { shippingFee: 40000, status: status })
+      .post("/orders/status&suburban", { shippingFee: 40000, status: status })
       .then((response) => {
         setOrders(response.data);
       });

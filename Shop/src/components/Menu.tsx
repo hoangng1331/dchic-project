@@ -45,7 +45,7 @@ function Menu() {
   };
   useEffect(() => {
     setIsHomePage(
-      window.location.pathname === "/home" || window.location.pathname === "/"
+      window.location.pathname.includes("/home")
     );
   }, [refresh]);
   const dispatch = useDispatch();
@@ -222,11 +222,11 @@ function Menu() {
                   <Route path="/orderproduct" element={<OrderProduct />} />
                   <Route
                     path="/login"
-                    element={<Navigate to="/customer/information" replace />}
+                    element={<Navigate to="/home" replace/>}
                   />
                   <Route
                     path="/register"
-                    element={<Navigate to="/customer/information" replace />}
+                    element={<Navigate to="/home" replace/>}
                   />
 
                   <Route
@@ -240,7 +240,7 @@ function Menu() {
                   />
                 </>
               )}
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Navigate to="/home" replace/>} />
               <Route path="/home" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:itemId" element={<DetailProduct />} />
