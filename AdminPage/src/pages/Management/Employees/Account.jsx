@@ -6,7 +6,7 @@ import moment from "moment";
 import { ReloadOutlined} from "@ant-design/icons";
 export default function Account() {
   const [employeeLogin, setEmployeeLogin] = useState("");
-  const { auth, logout } = useAuthStore((state) => state);
+  const { auth, logout, login } = useAuthStore((state) => state);
   const [employee, setEmployee] = useState(null);
   const [newEmployee, setNewEmployee] = useState(null);
   const [refresh, setRefresh] = useState(0);
@@ -189,7 +189,7 @@ export default function Account() {
         <Input />
       </Form.Item>
 
-      <Form.Item label="Ngày sinh" name="birthday">
+      <Form.Item label="Ngày sinh" name="birthday" required>
       <input
                 type="date"
                 className="form-control"
@@ -273,7 +273,14 @@ export default function Account() {
               {
               password: newPassword,
               }
-            )
+            ).then((res)=>{
+              const { username, password } = res.data;
+              login({ username, password })
+              updateForm.setFieldsValue({
+                password: "",
+                confirmPassword: "",
+              })
+            })
             setRefresh((f) => f + 1)
             message.success("Cập nhật thông tin thành công");
             setRefresh((f) => f + 1)
@@ -293,7 +300,21 @@ export default function Account() {
                     {
                     password: newPassword,
                     }
-                  )
+                  ).then((res)=>{
+                    axiosClient.patch(
+                      `/employees/${auth.loggedInUser.employeeId}`,
+                      {
+                      password: newPassword,
+                      }
+                    ).then((res)=>{
+                      const { username, password } = res.data;
+                      login({ username, password })
+                      updateForm.setFieldsValue({
+                        password: "",
+                        confirmPassword: "",
+                      })
+                    })
+                  })
                 setRefresh((f) => f + 1)
               });
               message.success("Cập nhật thông tin cá nhân thành công");
